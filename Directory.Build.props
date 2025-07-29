@@ -66,4 +66,7 @@
   <!-- NuGet Package Properties -->
   <Import Project="NuGet.pkg.props" />
 
+  <!-- Build Optimizations -->
+  <Import Project="Directory.Build.Optimization.props" Condition="Exists('Directory.Build.Optimization.props')" />
+
 </Project>

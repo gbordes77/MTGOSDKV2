@@ -1,3 +1,4 @@
+# EditorConfig for MTGOSDK
 # To learn more about .editorconfig see https://aka.ms/editorconfigdocs
 
 # top-most EditorConfig file
@@ -6,22 +7,61 @@ root = true
 ###############################
 # Core EditorConfig Options   #
 ###############################
+
 # All files
 [*]
-# insert_final_newline = true
+charset = utf-8
+insert_final_newline = true
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
+end_of_line = crlf
 
 # Generated code
-[*{_AssemblyInfo.cs,.g.cs}]
+[*{_AssemblyInfo.cs,.g.cs,.designer.cs}]
 generated_code = true
 
+# C# source files
+[*.cs]
+indent_size = 4
+insert_final_newline = true
+
 # XML project files
-[*.{csproj}]
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
 indent_size = 2
 
-# Code files
+# XML config files
+[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
+indent_size = 2
+
+# JSON files
+[*.{json,json5,webmanifest}]
+indent_size = 2
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+
+# Markdown files
+[*.{md,mdx}]
+trim_trailing_whitespace = false
+indent_size = 2
+
+# Web files
+[*.{htm,html,js,jsm,ts,tsx,css,sass,scss,less,svg,vue}]
+indent_size = 2
+
+# Batch files
+[*.{cmd,bat}]
+end_of_line = crlf
+
+# Shell scripts
+[*.sh]
+end_of_line = lf
+
+# PowerShell files
+[*.{ps1,psd1,psm1}]
+indent_size = 4
 
 ###############################
 # .NET Coding Conventions     #
@@ -29,7 +69,8 @@ indent_size = 2
 [*.{cs}]
 
 # Organize usings
-dotnet_sort_system_directives_first = false
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
 
 # this. preferences
 dotnet_style_qualification_for_field = false:suggestion
@@ -208,3 +249,193 @@ csharp_style_prefer_not_pattern = true:suggestion
 csharp_style_prefer_extended_property_pattern = true:suggestion
 csharp_style_prefer_parameter_null_checking = true:suggestion
 csharp_style_prefer_method_group_conversion = true:suggestion
+
+###############################
+# Code Quality Rules          #
+###############################
+
+# CA rules
+dotnet_diagnostic.CA1001.severity = warning  # Types that own disposable fields should be disposable
+dotnet_diagnostic.CA1009.severity = warning  # Declare event handlers correctly
+dotnet_diagnostic.CA1016.severity = warning  # Mark assemblies with assembly version
+dotnet_diagnostic.CA1033.severity = warning  # Interface methods should be callable by child types
+dotnet_diagnostic.CA1049.severity = warning  # Types that own native resources should be disposable
+dotnet_diagnostic.CA1060.severity = warning  # Move pinvokes to native methods class
+dotnet_diagnostic.CA1061.severity = warning  # Do not hide base class methods
+dotnet_diagnostic.CA1063.severity = warning  # Implement IDisposable Correctly
+dotnet_diagnostic.CA1065.severity = warning  # Do not raise exceptions in unexpected locations
+dotnet_diagnostic.CA1301.severity = warning  # Avoid duplicate accelerators
+dotnet_diagnostic.CA1400.severity = warning  # P/Invoke entry points should exist
+dotnet_diagnostic.CA1401.severity = warning  # P/Invokes should not be visible
+dotnet_diagnostic.CA1403.severity = warning  # Auto layout types should not be COM visible
+dotnet_diagnostic.CA1404.severity = warning  # Call GetLastError immediately after P/Invoke
+dotnet_diagnostic.CA1405.severity = warning  # COM visible type base types should be COM visible
+dotnet_diagnostic.CA1410.severity = warning  # COM registration methods should be matched
+dotnet_diagnostic.CA1415.severity = warning  # Declare P/Invokes correctly
+dotnet_diagnostic.CA1821.severity = warning  # Remove empty Finalizers
+dotnet_diagnostic.CA1900.severity = warning  # Value type fields should be portable
+dotnet_diagnostic.CA1901.severity = warning  # P/Invoke declarations should be portable
+dotnet_diagnostic.CA2002.severity = warning  # Do not lock on objects with weak identity
+dotnet_diagnostic.CA2100.severity = warning  # Review SQL queries for security vulnerabilities
+dotnet_diagnostic.CA2101.severity = warning  # Specify marshaling for P/Invoke string arguments
+dotnet_diagnostic.CA2108.severity = warning  # Review declarative security on value types
+dotnet_diagnostic.CA2111.severity = warning  # Pointers should not be visible
+dotnet_diagnostic.CA2112.severity = warning  # Secured types should not expose fields
+dotnet_diagnostic.CA2114.severity = warning  # Method security should be a superset of type
+dotnet_diagnostic.CA2116.severity = warning  # APTCA methods should only call APTCA methods
+dotnet_diagnostic.CA2117.severity = warning  # APTCA types should only extend APTCA base types
+dotnet_diagnostic.CA2122.severity = warning  # Do not indirectly expose methods with link demands
+dotnet_diagnostic.CA2123.severity = warning  # Override link demands should be identical to base
+dotnet_diagnostic.CA2124.severity = warning  # Wrap vulnerable finally clauses in outer try
+dotnet_diagnostic.CA2126.severity = warning  # Type link demands require inheritance demands
+dotnet_diagnostic.CA2131.severity = warning  # Security critical types may not participate in type equivalence
+dotnet_diagnostic.CA2132.severity = warning  # Default constructors must be at least as critical as base type default constructors
+dotnet_diagnostic.CA2133.severity = warning  # Delegates must bind to methods with consistent transparency
+dotnet_diagnostic.CA2134.severity = warning  # Methods must keep consistent transparency when overriding base methods
+dotnet_diagnostic.CA2137.severity = warning  # Transparent methods must contain only verifiable IL
+dotnet_diagnostic.CA2138.severity = warning  # Transparent methods must not call methods with the SuppressUnmanagedCodeSecurity attribute
+dotnet_diagnostic.CA2140.severity = warning  # Transparent code must not reference security critical items
+dotnet_diagnostic.CA2141.severity = warning  # Transparent methods must not satisfy LinkDemands
+dotnet_diagnostic.CA2146.severity = warning  # Types must be at least as critical as their base types and interfaces
+dotnet_diagnostic.CA2147.severity = warning  # Transparent methods may not use security asserts
+dotnet_diagnostic.CA2149.severity = warning  # Transparent methods must not call into native code
+dotnet_diagnostic.CA2200.severity = warning  # Rethrow to preserve stack details
+dotnet_diagnostic.CA2202.severity = warning  # Do not dispose objects multiple times
+dotnet_diagnostic.CA2207.severity = warning  # Initialize value type static fields inline
+dotnet_diagnostic.CA2212.severity = warning  # Do not mark serviced components with WebMethod
+dotnet_diagnostic.CA2213.severity = warning  # Disposable fields should be disposed
+dotnet_diagnostic.CA2214.severity = warning  # Do not call overridable methods in constructors
+dotnet_diagnostic.CA2216.severity = warning  # Disposable types should declare finalizer
+dotnet_diagnostic.CA2220.severity = warning  # Finalizers should call base class finalizer
+dotnet_diagnostic.CA2229.severity = warning  # Implement serialization constructors
+dotnet_diagnostic.CA2231.severity = warning  # Overload operator equals on overriding value type Equals
+dotnet_diagnostic.CA2232.severity = warning  # Mark Windows Forms entry points with STAThread
+dotnet_diagnostic.CA2235.severity = warning  # Mark all non-serializable fields
+dotnet_diagnostic.CA2236.severity = warning  # Call base class methods on ISerializable types
+dotnet_diagnostic.CA2237.severity = warning  # Mark ISerializable types with serializable
+dotnet_diagnostic.CA2238.severity = warning  # Implement serialization methods correctly
+dotnet_diagnostic.CA2240.severity = warning  # Implement ISerializable correctly
+dotnet_diagnostic.CA2241.severity = warning  # Provide correct arguments to formatting methods
+dotnet_diagnostic.CA2242.severity = warning  # Test for NaN correctly
+
+# IDE rules - Code style
+dotnet_diagnostic.IDE0001.severity = warning  # Simplify Names
+dotnet_diagnostic.IDE0002.severity = warning  # Simplify Member Access
+dotnet_diagnostic.IDE0003.severity = warning  # Remove qualification
+dotnet_diagnostic.IDE0004.severity = warning  # Remove Unnecessary Cast
+dotnet_diagnostic.IDE0005.severity = warning  # Using directive is unnecessary
+dotnet_diagnostic.IDE0007.severity = suggestion # Use implicit type
+dotnet_diagnostic.IDE0008.severity = suggestion # Use explicit type
+dotnet_diagnostic.IDE0009.severity = warning  # Member access should be qualified
+dotnet_diagnostic.IDE0010.severity = warning  # Add missing cases
+dotnet_diagnostic.IDE0011.severity = warning  # Add braces
+dotnet_diagnostic.IDE0016.severity = warning  # Use 'throw' expression
+dotnet_diagnostic.IDE0017.severity = warning  # Simplify object initialization
+dotnet_diagnostic.IDE0018.severity = warning  # Inline variable declaration
+dotnet_diagnostic.IDE0019.severity = warning  # Use pattern matching
+dotnet_diagnostic.IDE0020.severity = warning  # Use pattern matching
+dotnet_diagnostic.IDE0021.severity = warning  # Use expression body for constructors
+dotnet_diagnostic.IDE0022.severity = warning  # Use expression body for methods
+dotnet_diagnostic.IDE0023.severity = warning  # Use expression body for operators
+dotnet_diagnostic.IDE0024.severity = warning  # Use expression body for operators
+dotnet_diagnostic.IDE0025.severity = warning  # Use expression body for properties
+dotnet_diagnostic.IDE0026.severity = warning  # Use expression body for indexers
+dotnet_diagnostic.IDE0027.severity = warning  # Use expression body for accessors
+dotnet_diagnostic.IDE0028.severity = warning  # Simplify collection initialization
+dotnet_diagnostic.IDE0029.severity = warning  # Use coalesce expression
+dotnet_diagnostic.IDE0030.severity = warning  # Use coalesce expression
+dotnet_diagnostic.IDE0031.severity = warning  # Use null propagation
+dotnet_diagnostic.IDE0032.severity = warning  # Use auto property
+dotnet_diagnostic.IDE0033.severity = warning  # Use explicitly provided tuple name
+dotnet_diagnostic.IDE0034.severity = warning  # Simplify 'default' expression
+dotnet_diagnostic.IDE0035.severity = warning  # Unreachable code
+dotnet_diagnostic.IDE0036.severity = warning  # Order modifiers
+dotnet_diagnostic.IDE0037.severity = warning  # Use inferred member name
+dotnet_diagnostic.IDE0038.severity = warning  # Use pattern matching
+dotnet_diagnostic.IDE0039.severity = warning  # Use local function
+dotnet_diagnostic.IDE0040.severity = warning  # Add accessibility modifiers
+dotnet_diagnostic.IDE0041.severity = warning  # Use 'is null' check
+dotnet_diagnostic.IDE0042.severity = warning  # Deconstruct variable declaration
+dotnet_diagnostic.IDE0043.severity = warning  # Invalid format string
+dotnet_diagnostic.IDE0044.severity = warning  # Add readonly modifier
+dotnet_diagnostic.IDE0045.severity = warning  # Use conditional expression for assignment
+dotnet_diagnostic.IDE0046.severity = warning  # Use conditional expression for return
+dotnet_diagnostic.IDE0047.severity = warning  # Remove unnecessary parentheses
+dotnet_diagnostic.IDE0048.severity = warning  # Add parentheses for clarity
+dotnet_diagnostic.IDE0049.severity = warning  # Simplify Names
+dotnet_diagnostic.IDE0050.severity = warning  # Convert to tuple
+dotnet_diagnostic.IDE0051.severity = warning  # Remove unused private members
+dotnet_diagnostic.IDE0052.severity = warning  # Remove unread private members
+dotnet_diagnostic.IDE0053.severity = warning  # Use expression body for lambdas
+dotnet_diagnostic.IDE0054.severity = warning  # Use compound assignment
+dotnet_diagnostic.IDE0055.severity = warning  # Fix formatting
+dotnet_diagnostic.IDE0056.severity = warning  # Use index operator
+dotnet_diagnostic.IDE0057.severity = warning  # Use range operator
+dotnet_diagnostic.IDE0058.severity = silent   # Expression value is never used
+dotnet_diagnostic.IDE0059.severity = warning  # Unnecessary assignment of a value
+dotnet_diagnostic.IDE0060.severity = warning  # Remove unused parameter
+dotnet_diagnostic.IDE0061.severity = warning  # Use expression body for local functions
+dotnet_diagnostic.IDE0062.severity = warning  # Make local function 'static'
+dotnet_diagnostic.IDE0063.severity = warning  # Use simple 'using' statement
+dotnet_diagnostic.IDE0064.severity = warning  # Make readonly fields writable
+dotnet_diagnostic.IDE0065.severity = warning  # Misplaced using directive
+dotnet_diagnostic.IDE0066.severity = warning  # Convert switch statement to expression
+dotnet_diagnostic.IDE0070.severity = warning  # Use 'System.HashCode'
+dotnet_diagnostic.IDE0071.severity = warning  # Simplify interpolation
+dotnet_diagnostic.IDE0072.severity = warning  # Add missing cases
+dotnet_diagnostic.IDE0073.severity = warning  # Use file header
+dotnet_diagnostic.IDE0074.severity = warning  # Use compound assignment
+dotnet_diagnostic.IDE0075.severity = warning  # Simplify conditional expression
+dotnet_diagnostic.IDE0076.severity = warning  # Invalid global 'SuppressMessageAttribute'
+dotnet_diagnostic.IDE0077.severity = warning  # Avoid legacy format target
+dotnet_diagnostic.IDE0078.severity = warning  # Use pattern matching
+dotnet_diagnostic.IDE0079.severity = warning  # Remove unnecessary suppression
+dotnet_diagnostic.IDE0080.severity = warning  # Remove unnecessary suppression operator
+dotnet_diagnostic.IDE0081.severity = warning  # Remove unnecessary suppression operator
+dotnet_diagnostic.IDE0082.severity = warning  # 'typeof' can be converted to 'nameof'
+dotnet_diagnostic.IDE0083.severity = warning  # Use pattern matching
+dotnet_diagnostic.IDE0084.severity = warning  # Use pattern matching
+dotnet_diagnostic.IDE0090.severity = warning  # Use 'new(...)'
+dotnet_diagnostic.IDE0100.severity = warning  # Remove redundant equality
+dotnet_diagnostic.IDE0110.severity = warning  # Remove unnecessary discard
+dotnet_diagnostic.IDE0120.severity = warning  # Simplify LINQ expression
+dotnet_diagnostic.IDE0130.severity = warning  # Namespace does not match folder structure
+dotnet_diagnostic.IDE0150.severity = warning  # Prefer 'null' check over type check
+dotnet_diagnostic.IDE0160.severity = warning  # Convert to file-scoped namespace
+dotnet_diagnostic.IDE0161.severity = warning  # Convert to file-scoped namespace
+dotnet_diagnostic.IDE0170.severity = warning  # Use simpler property pattern
+dotnet_diagnostic.IDE0180.severity = warning  # Use tuple to swap values
+dotnet_diagnostic.IDE0200.severity = warning  # Remove unnecessary lambda expression
+dotnet_diagnostic.IDE0210.severity = warning  # Convert to top-level statements
+dotnet_diagnostic.IDE0211.severity = warning  # Convert to 'Program.Main' style program
+dotnet_diagnostic.IDE0220.severity = warning  # Add explicit cast
+dotnet_diagnostic.IDE0230.severity = warning  # Use UTF-8 string literal
+dotnet_diagnostic.IDE0240.severity = warning  # Remove redundant nullable directive
+dotnet_diagnostic.IDE0241.severity = warning  # Remove redundant nullable directive
+dotnet_diagnostic.IDE0250.severity = warning  # Make struct 'readonly'
+dotnet_diagnostic.IDE0251.severity = warning  # Make member 'readonly'
+dotnet_diagnostic.IDE0260.severity = warning  # Use pattern matching
+dotnet_diagnostic.IDE0270.severity = warning  # Use coalesce expression
+dotnet_diagnostic.IDE0280.severity = warning  # Use 'nameof'
+dotnet_diagnostic.IDE0290.severity = warning  # Use primary constructor
+dotnet_diagnostic.IDE0300.severity = warning  # Simplify collection initialization
+
+###############################
+# Project-Specific Rules      #
+###############################
+
+# Disable specific rules for generated code
+[*{.g.cs,.designer.cs,_AssemblyInfo.cs}]
+dotnet_diagnostic.IDE0005.severity = none    # Remove unnecessary using directives
+dotnet_diagnostic.IDE0161.severity = none    # Convert to file-scoped namespace
+dotnet_diagnostic.CA1707.severity = none     # Identifiers should not contain underscores
+
+# Disable specific rules for test files
+[*{Test,Tests,Spec,Specs}.cs]
+dotnet_diagnostic.CA1707.severity = none     # Identifiers should not contain underscores
+dotnet_diagnostic.IDE0058.severity = none    # Expression value is never used
+
+# Disable specific rules for P/Invoke files
+[*{Win32,Native,Interop}*.cs]
+dotnet_diagnostic.CA1401.severity = none     # P/Invokes should not be visible
+dotnet_diagnostic.IDE0079.severity = none    # Remove unnecessary suppression

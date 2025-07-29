@@ -12,10 +12,8 @@ This project consists of three main components:
 
 **MTGOSDK.Win32** — a library containing Win32 API definitions and helper functions used by the SDK. These are used to provide a more idiomatic C# API for Win32 functions and to ensure consistent API behavior across different versions of Windows. Additionally, this library serves as a reference for using Win32 APIs that are not yet implemented as part of the .NET Framework. This library is not intended to be used directly by consumers of the SDK.
 
-> TODO: Add a diagram of the SDK architecture.
+## Architecture Diagrams
 
-> TODO: Add a diagram of the SDK build process.
-
-> TODO: Explain the MTGOSDK.MSBuild code-generation process.
-
-> TODO: Explain the MTGOSDK DLR architecture and how it interacts with the MTGO client.
+- [**SDK Architecture**](diagrams/sdk-architecture.md) — Complete overview of the SDK components and their interactions
+- [**Build Process**](diagrams/build-process.md) — MSBuild workflow and code generation process
+- [**Remoting System**](diagrams/remoting-system.md) — DLR architecture and MTGO client interaction
