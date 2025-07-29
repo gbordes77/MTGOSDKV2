@@ -1,0 +1,170 @@
+<Project>
+
+  <!-- 
+    Optimizations MSBuild pour MTGOSDK
+    Ce fichier contient des optimisations de performance pour accélérer les builds
+  -->
+
+  <PropertyGroup Label="Build Performance Optimizations">
+    <!-- Enable parallel builds -->
+    <BuildInParallel>true</BuildInParallel>
+    <MaxCpuCount>0</MaxCpuCount>
+    
+    <!-- Enable incremental builds -->
+    <UseIncrementalBuild>true</UseIncrementalBuild>
+    <DisableFastUpToDateCheck>false</DisableFastUpToDateCheck>
+    
+    <!-- Optimize assembly loading -->
+    <UseSharedCompilation>true</UseSharedCompilation>
+    <UseRoslynAnalyzers>true</UseRoslynAnalyzers>
+    
+    <!-- Enable build caching -->
+    <EnableBuildCache>true</EnableBuildCache>
+    <RestoreUseStaticGraphEvaluation>true</RestoreUseStaticGraphEvaluation>
+    
+    <!-- Optimize NuGet restore -->
+    <RestoreNoCache Condition="'$(CI)' == 'true'">true</RestoreNoCache>
+    <RestoreIgnoreFailedSources>true</RestoreIgnoreFailedSources>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    
+    <!-- Enable faster PDB generation -->
+    <DebugType Condition="'$(Configuration)' == 'Debug'">portable</DebugType>
+    <DebugType Condition="'$(Configuration)' == 'Release'">pdbonly</DebugType>
+    
+    <!-- Optimize output -->
+    <GenerateDocumentationFile Condition="'$(Configuration)' == 'Release'">true</GenerateDocumentationFile>
+    <GenerateDocumentationFile Condition="'$(Configuration)' == 'Debug'">false</GenerateDocumentationFile>
+    
+    <!-- Enable deterministic builds for better caching -->
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildProjectDirectory)=.</PathMap>
+    
+    <!-- Optimize analyzers -->
+    <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)' == 'Release'">true</RunCodeAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)' == 'Debug'">false</RunCodeAnalysis>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Compiler Optimizations">
+    <!-- Enable all compiler optimizations for Release -->
+    <Optimize Condition="'$(Configuration)' == 'Release'">true</Optimize>
+    <Optimize Condition="'$(Configuration)' == 'Debug'">false</Optimize>
+    
+    <!-- Optimize IL generation -->
+    <IlcOptimizationPreference Condition="'$(Configuration)' == 'Release'">Speed</IlcOptimizationPreference>
+    <IlcFoldIdenticalMethodBodies Condition="'$(Configuration)' == 'Release'">true</IlcFoldIdenticalMethodBodies>
+    
+    <!-- Enable tiered compilation -->
+    <TieredCompilation>true</TieredCompilation>
+    <TieredCompilationQuickJit>true</TieredCompilationQuickJit>
+    
+    <!-- Optimize string interning -->
+    <Features>strict</Features>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Memory Optimizations">
+    <!-- Reduce memory usage during build -->
+    <UseSharedCompilation>true</UseSharedCompilation>
+    <BuildInParallel>true</BuildInParallel>
+    
+    <!-- Optimize MSBuild memory usage -->
+    <MSBuildDisableNodeReuse Condition="'$(CI)' == 'true'">true</MSBuildDisableNodeReuse>
+    <MSBuildDisableNodeReuse Condition="'$(CI)' != 'true'">false</MSBuildDisableNodeReuse>
+    
+    <!-- Enable server GC for better performance -->
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+    <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Output Optimizations">
+    <!-- Optimize output paths -->
+    <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    
+    <!-- Reduce output verbosity -->
+    <MSBuildLoggerVerbosity Condition="'$(CI)' == 'true'">minimal</MSBuildLoggerVerbosity>
+    <MSBuildLoggerVerbosity Condition="'$(CI)' != 'true'">normal</MSBuildLoggerVerbosity>
+    
+    <!-- Enable binary logging for CI -->
+    <MSBuildBinaryLogEnabled Condition="'$(CI)' == 'true'">true</MSBuildBinaryLogEnabled>
+    <MSBuildBinaryLogFile Condition="'$(CI)' == 'true'">$(LogDir)\msbuild.binlog</MSBuildBinaryLogFile>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Development Optimizations" Condition="'$(Configuration)' == 'Debug'">
+    <!-- Faster debug builds -->
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    
+    <!-- Skip documentation generation in debug -->
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    
+    <!-- Enable edit and continue -->
+    <EditAndContinueEnabled>true</EditAndContinueEnabled>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Release Optimizations" Condition="'$(Configuration)' == 'Release'">
+    <!-- Maximum optimizations for release -->
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    
+    <!-- Enable all optimizations -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    
+    <!-- Generate documentation -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    
+    <!-- Enable trimming for smaller output -->
+    <PublishTrimmed Condition="'$(EnableTrimming)' == 'true'">true</PublishTrimmed>
+    <TrimMode Condition="'$(EnableTrimming)' == 'true'">link</TrimMode>
+  </PropertyGroup>
+
+  <PropertyGroup Label="CI/CD Optimizations" Condition="'$(CI)' == 'true'">
+    <!-- Optimizations for CI builds -->
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+    
+    <!-- Disable interactive features -->
+    <UseSharedCompilation>false</UseSharedCompilation>
+    <MSBuildDisableNodeReuse>true</MSBuildDisableNodeReuse>
+    
+    <!-- Enable package validation -->
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <PackageValidationBaselineVersion>$(PackageVersion)</PackageValidationBaselineVersion>
+    
+    <!-- Generate source link -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!-- Conditional imports for better performance -->
+  <Import Project="Directory.Build.Analyzers.props" Condition="Exists('Directory.Build.Analyzers.props')" />
+  
+  <!-- Target to display build performance info -->
+  <Target Name="DisplayBuildInfo" BeforeTargets="Build" Condition="'$(Verbosity)' == 'diagnostic'">
+    <Message Text="🚀 Build Configuration: $(Configuration)" Importance="high" />
+    <Message Text="🔧 Target Framework: $(TargetFramework)" Importance="high" />
+    <Message Text="⚡ Parallel Build: $(BuildInParallel)" Importance="high" />
+    <Message Text="🎯 Max CPU Count: $(MaxCpuCount)" Importance="high" />
+    <Message Text="📦 Restore Static Graph: $(RestoreUseStaticGraphEvaluation)" Importance="high" />
+    <Message Text="🔍 Analyzers: $(RunCodeAnalysis)" Importance="high" />
+  </Target>
+
+  <!-- Clean up optimization artifacts -->
+  <Target Name="CleanOptimizationArtifacts" BeforeTargets="Clean">
+    <ItemGroup>
+      <OptimizationFiles Include="$(IntermediateOutputPath)**\*.optimization.*" />
+      <OptimizationFiles Include="$(OutputPath)**\*.optimization.*" />
+    </ItemGroup>
+    <Delete Files="@(OptimizationFiles)" ContinueOnError="true" />
+  </Target>
+
+</Project>
